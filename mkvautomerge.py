@@ -1,6 +1,6 @@
 #
 # mkvautomerge - mkvmerge batch processing
-# Copyright (C) 2016 Sergiu Deitsch <sergiu.deitsch@gmail.com>
+# Copyright (C) 2016, 2017 Sergiu Deitsch <sergiu.deitsch@gmail.com>
 #
 # This file is part of mkvautomerge.
 #
