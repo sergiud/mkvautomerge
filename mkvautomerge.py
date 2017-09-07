@@ -19,6 +19,7 @@
 #
 
 from iso639 import languages
+from itertools import chain
 from pathlib import Path
 import glob
 import os
@@ -199,11 +200,11 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser('mkvautomerge')
-    parser.add_argument('input', metavar='FILE',
-                        nargs='+',
+    parser.add_argument('input',
+                        nargs='*', action='append',
                         help='input files to merge')
-    parser.add_argument('-i', '--input', metavar='FILE',
-                        nargs='+',
+    parser.add_argument('-i', metavar='FILE', dest='input',
+                        nargs='+', action='append',
                         help='input files to merge')
     parser.add_argument('-o', '--output', metavar='FILE',
                         nargs=1,
@@ -227,7 +228,7 @@ if __name__ == '__main__':
     dirs = []
 
     # Expand globbing expressions first
-    for filename in args.input:
+    for filename in chain.from_iterable(args.input):
         glob_files = [Path(file) for file in glob.glob(filename)]
 
         for glob_file in glob_files:
