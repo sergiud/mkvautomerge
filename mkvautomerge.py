@@ -225,7 +225,9 @@ if __name__ == '__main__':
         print('DRY RUN')
 
     all_glob_files = []
-    dirs = []
+
+    currentdir = os.getcwd()
+    dirs = [Path(currentdir)]
 
     # Expand globbing expressions first
     for filename in chain.from_iterable(args.input):
@@ -240,7 +242,7 @@ if __name__ == '__main__':
     # Now filter directories
     for directory in dirs:
         for pattern in args.include:
-            globbed_files = directory.glob(pattern)
+            globbed_files = [entry.relative_to(currentdir) for entry in directory.glob(pattern)]
             all_glob_files += globbed_files
 
     if not all_glob_files:
@@ -264,6 +266,7 @@ if __name__ == '__main__':
             pass
 
     for glob_filename in all_glob_files:
+        print('including file', glob_filename)
         lang, forced = filename_language(glob_filename)
 
         if lang == None:
